@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link href="css/shop.css" rel="stylesheet" type="text/css"/>
+    <title>Product test with dat gui</title>
+</head>
+<body>
+    <section id="container"></section>
+    <script src="js/shop.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var scene   = new THREE.Scene();
+        var ambient = new THREE.AmbientLight( 0x101030 );
+        scene.add( ambient );
+
+        var light = new THREE.PointLight( 0xFFFFFF, 0.8 );
+            light.color.setHSL(0.995, 0.025, 0.99);
+            light.castShadow = true;
+            light.position.set( 0, 0, 100 );
+
+        // model
+        var manager = new THREE.LoadingManager();
+            manager.onProgress = function ( item, loaded, total ) {
+                console.log( item, loaded, total );
+            };
+        var gui = new dat.GUI();
+        var material= {
+            color:    {r:255, g:255, b:255},
+            ambient:  {r:255, g:255, b:255},
+            emissive: {r:0,   g:0,   b:0}
+        };
+        var loader = new OBJLoader( manager );
+            loader.load( '../model/teapot.obj', function ( model ) {
+                scene.add( model );
+
+                gui.addColor(material, 'color').onChange(function(color) {
+                    model.material.color = new THREE.Color(color);
+                });
+                gui.addColor(material, 'ambient').onChange(function(color) {
+                    model.material.ambient = new THREE.Color(color);
+                });
+                gui.addColor(material, 'emissive').onChange(function(color) {
+                    model.material.emissive = new THREE.Color(color);
+                });
+
+                var controller = new Controller(new Canvas3D('#container'), scene, model);
+                    controller.init();
+                    controller.animate();
+            });
+    </script>
+</body>
+</html>
