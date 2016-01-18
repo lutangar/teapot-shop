@@ -4,8 +4,8 @@
  * @param scene
  * @param model
  */
-function Controller (canvas3D, scene, model) {
-    // mandatory parameters
+function Controller (canvas3D, scene, model)
+{
     this.canvas3D = canvas3D;
     this.scene    = scene;
     this.model    = model;
@@ -13,30 +13,22 @@ function Controller (canvas3D, scene, model) {
 Controller.prototype = {};
 
 /**
- * Initialise
+ * Initialize
  */
-Controller.prototype.init = function () {
-    /**
-     * Set focus
-     */
-    this.camera = new Camera(70, this.canvas3D.getRatio(), 0.1, 80000);
-
+Controller.prototype.init = function ()
+{
     var light = new THREE.PointLight( 0xFFFFFF, 0.8 );
         light.color.setHSL(0.995, 0.025, 0.99);
         light.castShadow = true;
         light.position.set( 0, 0, 100 );
 
-    var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-
+    this.camera = new Camera(70, this.canvas3D.getRatio(), 0.1, 80000);
     this.camera.add(light);
-
     this.camera.position.copy(new THREE.Vector3(0, 2, -2));
+
     this.model.add(this.camera);
     this.controls = new THREE.TrackballControls(this.camera, this.canvas3D.renderer.domElement);
 
-    /**
-     * Events
-     */
     this.canvas3D.addEventListener('canvas:resize', this.camera.resize.bind(this.camera));
 };
 
@@ -59,10 +51,6 @@ Controller.prototype.render = function () {
         delta = this.clock.getDelta();
     }
 
-    if (this.tween) {
-        this.tween.update();
-    }
-
     // controls
     if (this.controls) {
         if (delta) {
@@ -77,8 +65,4 @@ Controller.prototype.render = function () {
         this.scene,
         this.camera
     );
-
-    if (this.stats) {
-        this.stats.update();
-    }
 };

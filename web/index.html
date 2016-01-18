@@ -3,10 +3,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title>Teapot - PrestaShop - 3D product personalization</title>
+    <title>Teapot Shop - PrestaShop - 3D product personalization</title>
     <meta name="viewport" content="width=device-width, minimum-scale=0.25, maximum-scale=1.6, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="./css/prestashop.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/css/prestashop.css" type="text/css" media="all">
+</head>
 <body id="product" class="product hide-left-column hide-right-column lang_fr">
 <div id="page">
 <div class="header-container">
@@ -134,10 +135,10 @@
             <button type="button" class="btn btn-default btn-twitter">
                 <i class="icon-twitter"></i> Tweet
             </button>
-            <button type="button" class="btn btn-default btn-facebook" onclick="socialsharing_facebook_click();">
+            <button type="button" class="btn btn-default btn-facebook">
                 <i class="icon-facebook"></i> Partager
             </button>
-            <button type="button" class="btn btn-default btn-google-plus" onclick="socialsharing_google_click();">
+            <button type="button" class="btn btn-default btn-google-plus">
                 <i class="icon-google-plus"></i> Google+
             </button>
             <button type="button" class="btn btn-default btn-pinterest">
@@ -379,17 +380,15 @@
         color: new THREE.Color(0.9137254901960784, 0.06666666666666667, 0.0784313725490196)
     });
     var manager = new THREE.LoadingManager();
-        manager.onProgress = function ( item, loaded, total ) {
-            console.log( item, loaded, total );
-        };
     var loader = new OBJLoader( manager );
-        loader.load( '../model/wt_teapot.obj', function ( model ) {
+        loader.load('/model/wt_teapot.obj', function (model) {
+            model.geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, -0.5, 0));
+
             var mesh = new THREE.Mesh(model.geometry, material);
             scene.add(mesh);
 
              $('.color_pick').on('click', function() {
                  $(this).parent().addClass('selected').siblings().removeClass('selected');
-
                  mesh.material.color = new THREE.Color().setStyle($(this).css('backgroundColor'));
 
                  return false;
