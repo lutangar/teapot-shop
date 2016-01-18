@@ -3,15 +3,14 @@ Teapot 3D shop, product demo
 
 A simple 3D product personalization
 
-> Demo: [http://lutangar.github.io/teapot-shop/]
+> Demo: <http://lutangar.github.io/teapot-shop/>
 
 Installation
 ============
 
 1. npm install
-2. bower install
-3. gulp serve
-4. Goto [http://localhost:3000/]
+2. gulp serve
+3. Goto <http://localhost:3000/>
 
 
 > Prestashop theme :
